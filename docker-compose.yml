@@ -1,0 +1,27 @@
+version: '3'
+services:
+    nginx:
+        image: 'linuxserver/letsencrypt:arm64v8-0.35.1-ls37'
+        container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - URL=yourdomain.url
+      - SUBDOMAINS=
+      - VALIDATION=http
+       #- DNSPLUGIN=cloudflare #optional
+       #- DUCKDNSTOKEN=token #optional
+       #- EMAIL=e-mail #optional
+       #- DHLEVEL=2048 #optional
+       #- ONLY_SUBDOMAINS=false #optional
+       #- EXTRA_DOMAINS=extradomains #optional
+       #- STAGING=false #optional
+    volumes:
+      - ./config:/config
+    ports:
+      - 443:443
+      - 80:80 #optional
+    restart: unless-stopped
